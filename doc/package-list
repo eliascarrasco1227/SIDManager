@@ -1,0 +1,10 @@
+com.isban.scf.sid
+com.isban.scf.sid.SIDManager
+com.isban.scf.sid.config
+com.isban.scf.sid.controller
+com.isban.scf.sid.enumerated
+com.isban.scf.sid.handler
+com.isban.scf.sid.model
+com.isban.scf.sid.repository
+com.isban.scf.sid.service
+com.isban.scf.sid.utils

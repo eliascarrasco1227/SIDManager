@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Santander SIDManager: Sign up</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/js/shared.js"></script>
+    
+    <link rel="stylesheet" href="/css/shared.css">
+</head>
+<body>
+    <header>
+        <h1 th:attr="onclick='location.href=\'' + @{${@environment.getProperty('serverUrl')}} + '\';'" &nbsp;>
+            <img src="/img/logo-santander.svg" alt="Santander">
+            <span id="headerTitle">SIDManager</span>
+        </h1>
+    </header>
+    
+    <h1>Confirmation user</h1>
+    
+    <!-- Show the message if it exists / paint it red if it is a warning / print the one from app.properties with that name -->
+        <div id="errorMessageModal" class="modal" th:if="${responseMessage}">
+            <div class="modal-content" 
+            	th:style="${isAWarningMessage ? 
+	        		'background-color:red;' :
+	            	'background-color:green;'}">
+                <span class="close-button">&times;</span>
+                <p th:text="#{${responseMessage}}"></p>
+            </div>
+        </div>
+    
+</body>
+</html>

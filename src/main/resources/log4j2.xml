@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- Appender para los logs de la aplicación -->
+        <File name="AppFile" fileName="C:/Applics/scfapps/scf-runtime-logs/SIDManager/App.log" append="true">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        
+        <!-- Appender para los logs de Spring Boot -->
+        <File name="SpringFile" fileName="C:/Applics/scfapps/scf-runtime-logs/SIDManager/Spring.log" append="true">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+            </PatternLayout>
+        </File>
+        
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    
+    <Loggers>
+        <!-- Logger para los paquetes de la aplicación -->
+        <Logger name="com.isban.scf.sid" level="trace" additivity="false">
+            <AppenderRef ref="AppFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        
+        <!-- Logger para los paquetes de Spring Boot -->
+        <Logger name="org.springframework" level="trace" additivity="false">
+            <AppenderRef ref="SpringFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <!-- Agregar el Appender de Spring al Root Logger -->
+            <AppenderRef ref="SpringFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

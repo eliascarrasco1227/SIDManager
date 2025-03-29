@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title> Santander SIDManager: Sign up </title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+
+</head>
+<body>
+	<h1 style="color: green">
+		Sin errores en front end
+	</h1>
+	
+	<!-- Mostrar el mensaje si existe -->
+    <div th:if="${responseMessage}" class="response-message">
+        <p th:text="${responseMessage}"></p>
+    </div>
+</body>

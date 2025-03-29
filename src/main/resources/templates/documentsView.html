@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Santander SID Manager </title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script src="/js/documentsView.js"></script>
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    
+    <link rel="stylesheet" href="/css/documentsView.css">
+
+</head>
+<body>
+	<header>
+        <div class="header-container">
+            <div class="header-left">
+                <h1 onclick="location.href='http://localhost:8080/';">
+                    <img src="/img/logo-santander.svg" alt="Santander" class="logo"> 
+                    <span id="headerTitle">SIDManager</span>
+                </h1>
+            </div>
+            <div class="header-right">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="logout-button">Log out</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+	<main id="main">
+		<p>Check that your documents are correctly saved with a simple search.</p>
+		
+		<!-- Show the message if it exists / paint it red if it is a warning / print the one from app.properties with that name -->
+        <div id="errorMessageModal" class="modal" th:if="${responseMessage}">
+            <div class="modal-content" 
+            	th:style="${isAWarningMessage ? 
+	        		'background-color:red;' :
+	            	'background-color:green;'}">
+                <span class="close-button">&times;</span>
+                <p th:text="#{${responseMessage}}"></p>
+            </div>
+        </div>
+	
+	    <!-- Filtros personalizados -->
+	    <form th:action="@{/list}" method="get">
+		    <section id="allFilters">
+			    <div id="allDateFilters">    
+			        <div class="dateFilter" id="startFilter">
+				        <label class="filterName" for="min-date"> Start </label> <br>
+						<input class="filterInput" type="date" id="min-date" name="min-date" th:value="${#dates.format(startDate, 'yyyy-MM-dd')}" >
+					</div >
+					
+					<div class="dateFilter" id="endFilter">
+						<label class="filterName" for="max-date"> End </label> <br>
+						<input class="filterInput" type="date" id="max-date" name="max-date" th:value="${#dates.format(endDate, 'yyyy-MM-dd')}" />
+					</div>
+					
+					<div id="notSavedFilter" class="dateFilter" th:if="${isShowingUnsaveds == 'No'}">
+				    	<label for="filter-not-received">
+				    		Only unsaved <br>
+				        	<input type="checkbox" id="filter-not-received" name="filter-not-received">
+				        </label>
+				    </div>
+					
+					<div class="dateFilter" id="applyButton">
+							<button type="submit" class="buttonText" id="apply-filter"> Apply on all &#x1F50E; </button>
+					</div>
+					
+					<!--
+					<div class="dateFilter" id="resetButton">
+						<button type="submit" class="buttonText"> Last 10 days &#8634; </p>
+					</div>
+					-->
+					
+					<!-- Botón para enviar a /not-received -->
+		            <div class="dateFilter" id="applyButtonNotReceived">
+		                <button type="submit" formaction="/not-received" class="buttonText" id="apply-filter-not-received"> All unsaved ❌ </button>
+		            </div>
+			    </div>
+			</section>
+		</form>
+	
+	    <table id="example" class="table table-striped">
+	        <thead>
+	            <tr>
+	                <th colspan="5" id="tableHead"> Documents in the database </th>
+	            </tr>
+	            <tr>
+	                <th id="columnHeader1"> Client app id </th>
+	                <th id="columnHeader2"> Client doc id </th>
+	                <th id="columnHeader3"> Provider id </th>
+	                <th id="columnHeader4"> Sent at </th>
+	                <th id="columnHeader5"> Received at </th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <!-- Este bloque se repetirá para cada documento en la lista -->
+	            <tr th:each="document : ${documents}">
+	                <td th:text="${document.clientAppId}"></td>
+	                <td th:text="${document.clientDocId}"></td>
+	                <td th:text="${document.providerId}"></td>
+	                <td th:text="${document.sentAt}"></td>
+	                <td th:text="${document.receivedAt ?: 'Not received'}"></td>
+	            </tr>
+	            <!-- Repetir el bloque de arriba para cada documento -->
+	        </tbody>
+	    </table>
+	    
+	    <!-- The Modal -->
+		<div id="myModal" class="modal">
+		
+		  <!-- Modal content -->
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <h2> Warning </h2>
+		      <span class="close">&times;</span>
+		    </div>
+		    <div class="modal-body">
+		      <p> To use date filter it is needed one dates at least. </p>
+		      <p> You can close this modal message whenever you want. </p>
+		    </div>
+		  </div>
+		</div>
+	</main>
+	
+	<footer id="foot">
+		<p> © <script>document.write(new Date().getFullYear())</script> Santander Consumer Finance. All rights reserved.</p>
+	</footer>
+
+</body>
+</html>

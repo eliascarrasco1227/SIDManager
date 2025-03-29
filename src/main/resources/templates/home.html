@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIDManager</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/documentsView.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1 onclick="location.href='http://localhost:8080/';">
+                <img src="/img/logo-santander.svg" alt="Santander Logo" class="logo">
+                <span id="headerTitle">SIDManager</span>
+            </h1>
+        </div>
+        <nav>
+            <a th:href="@{${loginUrl}}" class="login-button">Login</a>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main>
+    	<p>Check that your documents are correctly saved with a simple search.</p>
+        <div class="main-content">
+            <a th:href="@{${dashboardUrl}}" class="main-button">Go to Dashboard</a>
+        </div>
+    </main>
+
+    <script src="/js/home.js"></script>
+</body>
+</html>
